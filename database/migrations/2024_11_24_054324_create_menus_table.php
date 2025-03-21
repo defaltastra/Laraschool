@@ -228,43 +228,51 @@ return new class extends Migration
             ],
         ]);
 
-        // Insert the "Subjects" menu
-        $subjectMenuId = DB::table('menus')->insertGetId([
-            'title' => 'Subjects',
-            'icon'  => 'fas fa-book-reader',
-            'route' => null,
-            'active_routes' => json_encode(['subject/list/page']),
-            'pattern'   => null,
-            'parent_id' => null,
-            'order'     => 7,
-            'is_active' => true,
-            'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Staff']),
-        ]);
+  
+ // Insert the "Media" menu
+$mediaMenuId = DB::table('menus')->insertGetId([
+    'title' => 'Media',
+    'icon'  => 'fa fa-video',  // You can adjust the icon
+    'route' => null,  // No route for the parent, it's just a category
+    'active_routes' => json_encode([]), // No active route for the parent
+    'pattern'   => null,
+    'parent_id' => null, // No parent, since it's the main menu item
+    'order'     => 1,
+    'is_active' => true,
+    'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+]);
 
-        DB::table('menus')->insert([
-            [
-                'title' => 'Subject List',
-                'icon'  => null,
-                'route' => 'subject/list/page',
-                'active_routes' => json_encode(['subject/list/page']),
-                'pattern'   => null,
-                'parent_id' => $subjectMenuId,
-                'order'     => 1,
-                'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Staff']),
-            ],
-            [
-                'title' => 'Subject Add',
-                'icon'  => null,
-                'route' => 'subject/add/page',
-                'active_routes' => json_encode(['subject/add/page']),
-                'pattern'   => null,
-                'parent_id' => $subjectMenuId,
-                'order'     => 2,
-                'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin']),
-            ],
-        ]);
+// Now insert the child menus for Media
+DB::table('menus')->insert([
+    [
+        'title' => 'Media List',
+        'icon'  => null,
+        'route' => 'media.list', // Route to view all media
+        'active_routes' => json_encode(['media.list']),
+        'pattern'   => null,
+        'parent_id' => $mediaMenuId, // Use the media menu ID for parent
+        'order'     => 1,
+        'is_active' => true,
+        'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+    ],
+    [
+        'title' => 'Upload Media',
+        'icon'  => null,
+        'route' => 'media.upload.page', // Route to upload media
+        'active_routes' => json_encode(['media.upload.page']),
+        'pattern'   => null,
+        'parent_id' => $mediaMenuId, // Use the media menu ID for parent
+        'order'     => 2,
+        'is_active' => true,
+        'roles'     => json_encode(['Admin', 'Super Admin']),
+    ],
+
+    
+]);
+
+
+
+      
     }
 
     /**
@@ -275,3 +283,4 @@ return new class extends Migration
         Schema::dropIfExists('menus');
     }
 };
+

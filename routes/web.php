@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\StudentController;
 
@@ -119,17 +120,22 @@ Route::group(['namespace' => 'App\Http\Controllers'],function()
 
     });
 
-    // ----------------------- subject -----------------------------//
-    Route::controller(SubjectController::class)->group(function () {
-        Route::get('subject/list/page', 'subjectList')->middleware('auth')->name('subject/list/page'); // subject/list/page
-        Route::get('subject/add/page', 'subjectAdd')->middleware('auth')->name('subject/add/page'); // subject/add/page
-        Route::post('subject/save', 'saveRecord')->name('subject/save'); // subject/save
-        Route::post('subject/update', 'updateRecord')->name('subject/update'); // subject/update
-        Route::post('subject/delete', 'deleteRecord')->name('subject/delete'); // subject/delete
-        Route::get('subject/edit/{subject_id}', 'subjectEdit'); // subject/edit/page
+  
+
+
+    Route::controller(MediaController::class)->group(function () {
+        // Display the upload form and list of media (GET request)
+        Route::get('media/upload', 'index')->name('media.upload.page'); // Shows the media upload form and lists media
+        
+        // Handle the media upload (POST request)
+        Route::post('media/upload', 'upload')->name('media.upload'); // Handles the file upload action
+        
+        // Display the media list (GET request)
+        Route::get('media/list', 'showMediaList')->name('media.list'); // Displays the list of all uploaded media
+        
+        // Delete media (POST request)
+        Route::delete('media/delete/{id}', 'delete')->name('media.delete'); // Deletes media based on ID
     });
-    Route::get('/student/lessons', [StudentController::class, 'studentLessons'])->name('student.lessons');
+    
 
-
-   
 });
