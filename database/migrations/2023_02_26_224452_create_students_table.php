@@ -51,14 +51,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Tests Table
-        Schema::create('tests', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
-            $table->boolean('attended')->default(false);
-            $table->boolean('passed')->default(false);
-            $table->timestamps();
-        });
+        
 
         // Lessons Table
         Schema::create('lessons', function (Blueprint $table) {

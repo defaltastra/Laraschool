@@ -51,13 +51,17 @@
                                         @endif
 
                                         {{-- Delete Button --}}
-                                        <form action="{{ route('media.delete', $item->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </button>
-                                        </form>
+                                       <!-- Check if the user is not a student -->
+@if(auth()->user()->role_name != 'Student')
+<form action="{{ route('media.delete', $item->id) }}" method="POST" class="d-inline">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-sm btn-danger">
+        <i class="fas fa-trash"></i> Delete
+    </button>
+</form>
+@endif
+
                                         
                                     </td>
                                 </tr>

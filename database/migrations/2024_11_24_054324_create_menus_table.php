@@ -121,7 +121,7 @@ return new class extends Migration
             'parent_id' => null,
             'order'     => 4,
             'is_active' => true,
-            'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Staff']),
+            'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Student']),
         ]);
 
         DB::table('menus')->insert([
@@ -134,7 +134,7 @@ return new class extends Migration
                 'parent_id' => $studentMenuId,
                 'order'     => 1,
                 'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Staff']),
+                'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Student']),
             ],
             [
                 'title' => 'Student Add',
@@ -239,7 +239,7 @@ $mediaMenuId = DB::table('menus')->insertGetId([
     'parent_id' => null, // No parent, since it's the main menu item
     'order'     => 1,
     'is_active' => true,
-    'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+    'roles'     => json_encode(['Admin', 'Super Admin', 'Staff','Student']),
 ]);
 
 // Now insert the child menus for Media
@@ -253,7 +253,7 @@ DB::table('menus')->insert([
         'parent_id' => $mediaMenuId, // Use the media menu ID for parent
         'order'     => 1,
         'is_active' => true,
-        'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+        'roles'     => json_encode(['Admin', 'Super Admin', 'Staff','Student']),
     ],
     [
         'title' => 'Upload Media',
@@ -271,6 +271,44 @@ DB::table('menus')->insert([
 ]);
 
 
+$testsMenuId = DB::table('menus')->insertGetId([
+    'title' => 'Tests',
+    'icon'  => 'fa fa-file-alt',  // Adjust the icon as needed
+    'route' => null,  // No route for the parent, it's just a category
+    'active_routes' => json_encode([]), // No active route for the parent
+    'pattern'   => null,
+    'parent_id' => null, // No parent, since it's the main menu item
+    'order'     => 2, // Adjust order as needed
+    'is_active' => true,
+    'roles'     => json_encode(['Admin', 'Super Admin', 'Teacher','Student']),
+]);
+
+// Now insert the child menus for Tests
+DB::table('menus')->insert([
+    [
+        'title' => 'Test List',
+        'icon'  => null,
+        'route' => 'tests.list', // Route to view all tests
+        'active_routes' => json_encode(['tests.list']),
+        'pattern'   => null,
+        'parent_id' => $testsMenuId, // Use the tests menu ID for parent
+        'order'     => 1,
+        'is_active' => true,
+        'roles'     => json_encode(['Admin', 'Super Admin', 'Teacher','Student']),
+    ],
+    [
+        'title' => 'Create Test',
+        'icon'  => null,
+        'route' => 'tests.create.page', // Route to create a new test
+        'active_routes' => json_encode(['tests.create.page']),
+        'pattern'   => null,
+        'parent_id' => $testsMenuId, // Use the tests menu ID for parent
+        'order'     => 2,
+        'is_active' => true,
+        'roles'     => json_encode(['Admin', 'Super Admin', 'Teacher']),
+    ],
+
+]);
 
       
     }

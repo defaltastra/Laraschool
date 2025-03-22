@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\StudentController;
@@ -137,5 +138,18 @@ Route::group(['namespace' => 'App\Http\Controllers'],function()
         Route::delete('media/delete/{id}', 'delete')->name('media.delete'); // Deletes media based on ID
     });
     
+
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/tests', [TestController::class, 'index'])->name('tests.list');
+        Route::get('/tests/create', [TestController::class, 'create'])->name('tests.create.page');
+        Route::post('/tests', [TestController::class, 'store'])->name('tests.store');
+        Route::get('/tests/{test}', [TestController::class, 'show'])->name('tests.show');
+        Route::get('/tests/{test}/edit', [TestController::class, 'edit'])->name('tests.edit');
+        Route::put('/tests/{test}', [TestController::class, 'update'])->name('tests.update');
+        Route::delete('/tests/{test}', [TestController::class, 'destroy'])->name('tests.destroy');
+        Route::get('/tests/results', [TestController::class, 'results'])->name('tests.results');
+        Route::post('/tests/{test}/submit', [TestController::class, 'submit'])->name('tests.submit');
+    });
 
 });

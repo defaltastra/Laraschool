@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('content')
     <div class="page-wrapper">
@@ -48,21 +47,18 @@
                                         <h3 class="page-title">Students</h3>
                                     </div>
                                     <div class="col-auto text-end float-end ms-auto download-grp">
-                                        <a href="{{ route('student/list') }}" class="btn btn-outline-gray me-2 active">
-                                            <i class="fa fa-list" aria-hidden="true"></i>
-                                        </a>
-                                        <a href="{{ route('student/grid') }}" class="btn btn-outline-gray me-2">
-                                            <i class="fa fa-th" aria-hidden="true"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        <a href="{{ route('student/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        <!-- Display only if the user is not a student -->
+                                        @if(auth()->user()->role_name != 'Student')
+                                            <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
+                                            <a href="{{ route('student/add/page') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        @endif
                                     </div>
+                                    
                                 </div>
                             </div>
 
                             <div class="table-responsive">
-                                <table
-                                    class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
+                                <table class="table border-0 star-student table-hover table-center mb-0 datatable table-striped">
                                     <thead class="student-thread">
                                         <tr>
                                             <th>
@@ -89,19 +85,27 @@
                                             <td hidden class="avatar">{{ $list->upload }}</td>
                                             <td>
                                                 <h2 class="table-avatar">
-                                                   
                                                     <a href="#">{{ $list->first_name }} {{ $list->last_name }}</a>
                                                 </h2>
                                             </td>
                                             <td>{{ $list->class }} {{ $list->section }}</td>
                                             <td class="text-end">
                                                 <div class="actions">
+                                                    @if(auth()->user()->role_name != 'Student')
                                                     <a href="{{ url('student/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
                                                         <i class="far fa-edit me-2"></i>
                                                     </a>
                                                     <a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
                                                         <i class="far fa-trash-alt me-2"></i>
                                                     </a>
+                                                @endif
+                                                 <!-- Display delete only if the user is not a student -->
+@if(auth()->user()->role_name != 'Student')
+<a class="btn btn-sm bg-danger-light student_delete" data-bs-toggle="modal" data-bs-target="#studentUser">
+    <i class="far fa-trash-alt me-2"></i>
+</a>
+@endif
+
                                                 </div>
                                             </td>
                                         </tr>

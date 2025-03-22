@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-6">
                                     <ul class="chart-list-out">
-                                        <li class="lesson-view-all"><a href="{{ route('student.lessons') }}">View All</a></li>
+                                      
                                     </ul>
                                 </div>
                             </div>
