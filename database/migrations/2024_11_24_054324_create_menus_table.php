@@ -42,7 +42,7 @@ return new class extends Migration
             'parent_id' => null,
             'order'     => 1,
             'is_active' => true,
-            'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Student', 'Staff']),
+            'roles'     => json_encode(['Admin',  'Teachers', 'Student', 'Staff']),
         ]);
 
         // Insert submenu items under "Dashboard"
@@ -59,7 +59,7 @@ return new class extends Migration
                 'roles'     => json_encode(['Admin', 'Super Admin']),
             ],
             [
-                'title' => 'Teacher Dashboard',
+                'title' => 'Teachers Dashboard',
                 'icon'  => null,
                 'route' => 'teacher/dashboard',
                 'active_routes' => json_encode(['teacher/dashboard']),
@@ -121,7 +121,7 @@ return new class extends Migration
             'parent_id' => null,
             'order'     => 4,
             'is_active' => true,
-            'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Student']),
+            'roles'     => json_encode(['Admin',  'Teachers', 'Student']),
         ]);
 
         DB::table('menus')->insert([
@@ -134,7 +134,7 @@ return new class extends Migration
                 'parent_id' => $studentMenuId,
                 'order'     => 1,
                 'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin', 'Teachers', 'Student']),
+                'roles'     => json_encode(['Admin',  'Teachers', 'Student']),
             ],
             [
                 'title' => 'Student Add',
@@ -145,7 +145,7 @@ return new class extends Migration
                 'parent_id' => $studentMenuId,
                 'order'     => 2,
                 'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+                'roles'     => json_encode(['Admin',  'Staff']),
             ],
 
         
@@ -161,12 +161,12 @@ return new class extends Migration
             'parent_id' => null,
             'order'     => 5,
             'is_active' => true,
-            'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+            'roles'     => json_encode(['Admin',  'Staff','Teachers']),
         ]);
 
         DB::table('menus')->insert([
             [
-                'title' => 'Teacher List',
+                'title' => 'Teachers List',
                 'icon'  => null,
                 'route' => 'teacher/list/page',
                 'active_routes' => json_encode(['teacher/list/page']),
@@ -174,10 +174,10 @@ return new class extends Migration
                 'parent_id' => $teacherMenuId,
                 'order'     => 1,
                 'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+                'roles'     => json_encode(['Admin',  'Staff','Teachers']),
             ],
             [
-                'title' => 'Teacher Add',
+                'title' => 'Teachers Add',
                 'icon'  => null,
                 'route' => 'teacher/add/page',
                 'active_routes' => json_encode(['teacher/add/page']),
@@ -185,7 +185,7 @@ return new class extends Migration
                 'parent_id' => $teacherMenuId,
                 'order'     => 2,
                 'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin']),
+                'roles'     => json_encode(['Admin']),
             ],
           
         ]);
@@ -200,7 +200,7 @@ return new class extends Migration
             'parent_id' => null,
             'order'     => 6,
             'is_active' => true,
-            'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+            'roles'     => json_encode(['Admin',  'Staff']),
         ]);
 
         DB::table('menus')->insert([
@@ -213,7 +213,7 @@ return new class extends Migration
                 'parent_id' => $departmentMenuId,
                 'order'     => 1,
                 'is_active' => true,
-                'roles'     => json_encode(['Admin', 'Super Admin', 'Staff']),
+                'roles'     => json_encode(['Admin',  'Staff']),
             ],
             [
                 'title' => 'Department Add',
@@ -239,7 +239,7 @@ $mediaMenuId = DB::table('menus')->insertGetId([
     'parent_id' => null, // No parent, since it's the main menu item
     'order'     => 1,
     'is_active' => true,
-    'roles'     => json_encode(['Admin', 'Super Admin', 'Staff','Student']),
+    'roles'     => json_encode(['Admin',  'Teachers','Student']),
 ]);
 
 // Now insert the child menus for Media
@@ -253,7 +253,7 @@ DB::table('menus')->insert([
         'parent_id' => $mediaMenuId, // Use the media menu ID for parent
         'order'     => 1,
         'is_active' => true,
-        'roles'     => json_encode(['Admin', 'Super Admin', 'Staff','Student']),
+        'roles'     => json_encode(['Admin', 'Teachers','Student']),
     ],
     [
         'title' => 'Upload Media',
@@ -264,7 +264,7 @@ DB::table('menus')->insert([
         'parent_id' => $mediaMenuId, // Use the media menu ID for parent
         'order'     => 2,
         'is_active' => true,
-        'roles'     => json_encode(['Admin', 'Super Admin']),
+        'roles'     => json_encode(['Admin', 'Teachers']),
     ],
 
     
@@ -280,7 +280,7 @@ $testsMenuId = DB::table('menus')->insertGetId([
     'parent_id' => null, // No parent, since it's the main menu item
     'order'     => 2, // Adjust order as needed
     'is_active' => true,
-    'roles'     => json_encode(['Admin', 'Super Admin', 'Teacher','Student']),
+    'roles'     => json_encode(['Admin',  'Teachers','Student']),
 ]);
 
 // Now insert the child menus for Tests
@@ -294,7 +294,7 @@ DB::table('menus')->insert([
         'parent_id' => $testsMenuId, // Use the tests menu ID for parent
         'order'     => 1,
         'is_active' => true,
-        'roles'     => json_encode(['Admin', 'Super Admin', 'Teacher','Student']),
+        'roles'     => json_encode(['Admin',  'Teachers','Student']),
     ],
     [
         'title' => 'Create Test',
@@ -305,7 +305,7 @@ DB::table('menus')->insert([
         'parent_id' => $testsMenuId, // Use the tests menu ID for parent
         'order'     => 2,
         'is_active' => true,
-        'roles'     => json_encode(['Admin', 'Super Admin', 'Teacher']),
+        'roles'     => json_encode(['Admin',  'Teachers']),
     ],
 
 ]);

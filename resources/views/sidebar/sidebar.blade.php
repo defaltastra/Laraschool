@@ -9,33 +9,33 @@
                 @foreach ($menus as $menu)
                     @php
                         // Get the logged-in user's role from the 'role_name' column
-                        $userRole = auth()->user()->role_name ?? []; // Default to 'Student' if not set
+                        $userRole = auth()->user()->role_name ?? 'Student'; // Default to 'Student' if not set
 
-                        // Decode the allowed roles for the current menu item
-                        $menuItemRoles = json_decode($menu->roles) ?? [];
+                        // Ensure menu roles are decoded properly
+                        $menuItemRoles = json_decode($menu->roles, true) ?? []; 
 
-                        // Check if the user's role matches any of the allowed roles for the menu item
-                        $roleMatch = in_array($userRole, $menuItemRoles);
+                        // Ensure user role is checked properly
+                        $roleMatch = is_array($menuItemRoles) && in_array($userRole, $menuItemRoles);
                     @endphp
 
-                    @if ($roleMatch)  <!-- Show menu if there is a role match -->
+                    @if ($roleMatch)  <!-- Show menu if role matches -->
                         <li class="submenu {{ set_active($menu->active_routes) }} 
                             {{ (isset($menu->pattern) && request()->is($menu->pattern)) ? 'active' : '' }}">
                             <a href="{{ $menu->route ? route($menu->route) : '#' }}">
                                 <i class="{{ $menu->icon }}"></i>
                                 <span>{{ $menu->title }}</span>
-                                @if ($menu->children->count())
+                                @if (!empty($menu->children) && $menu->children->count())
                                     <span class="menu-arrow"></span>
                                 @endif
                             </a>
-                            @if ($menu->children->count())
+                            @if (!empty($menu->children) && $menu->children->count())
                                 <ul>
                                     @foreach ($menu->children as $child)
                                         @php
                                             // Decode roles for child menu items
-                                            $childRoles = json_decode($child->roles) ?? [];
+                                            $childRoles = json_decode($child->roles, true) ?? [];
                                             // Check if the user has the role that matches the child menu item
-                                            $childRoleMatch = in_array($userRole, $childRoles);
+                                            $childRoleMatch = is_array($childRoles) && in_array($userRole, $childRoles);
                                         @endphp
                                         @if ($childRoleMatch)  <!-- Only show child menu if role matches -->
                                             <li>
