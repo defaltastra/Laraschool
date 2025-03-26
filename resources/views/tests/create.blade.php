@@ -99,34 +99,35 @@
 
     {{-- JavaScript for Dynamic Question Addition --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let questionIndex = 1;
-            document.getElementById('add-question').addEventListener('click', function () {
-                let container = document.getElementById('questions-container');
-                let newQuestion = document.createElement('div');
-                newQuestion.classList.add('question-block');
-                newQuestion.innerHTML = `
-                    <div class="form-group">
-                        <label>Question <span class="login-danger">*</span></label>
-                        <input type="text" name="questions[\${questionIndex}][text]" class="form-control" required>
+     document.addEventListener('DOMContentLoaded', function () {
+    let questionIndex = 1;
+    document.getElementById('add-question').addEventListener('click', function () {
+        let container = document.getElementById('questions-container');
+        let newQuestion = document.createElement('div');
+        newQuestion.classList.add('question-block');
+        newQuestion.innerHTML = `
+            <div class="form-group">
+                <label>Question <span class="login-danger">*</span></label>
+                <input type="text" name="questions[${questionIndex}][text]" class="form-control" required>
+            </div>
+            <div class="answers-group">
+                ${[0, 1, 2, 3].map(i => `
+                    <div class="form-check">
+                        <input type="radio" name="questions[${questionIndex}][correct]" value="${i}" required>
+                        <input type="text" name="questions[${questionIndex}][answers][]" class="form-control d-inline-block w-75" placeholder="Answer Option" required>
                     </div>
-                    <div class="answers-group">
-                        ${[0, 1, 2, 3].map(i => `
-                            <div class="form-check">
-                                <input type="radio" name="questions[\${questionIndex}][correct]" value="\${i}" required>
-                                <input type="text" name="questions[\${questionIndex}][answers][]" class="form-control d-inline-block w-75" placeholder="Answer Option" required>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="form-group mt-2">
-                        <label>Points (must sum to 20)</label>
-                        <input type="number" name="questions[\${questionIndex}][points]" class="form-control" min="1" max="20" required>
-                    </div>
-                    <hr>
-                `;
-                container.appendChild(newQuestion);
-                questionIndex++;
-            });
-        });
+                `).join('')}
+            </div>
+            <div class="form-group mt-2">
+                <label>Points (must sum to 20)</label>
+                <input type="number" name="questions[${questionIndex}][points]" class="form-control" min="1" max="20" required>
+            </div>
+            <hr>
+        `;
+        container.appendChild(newQuestion);
+        questionIndex++; 
+    });
+});
+
     </script>
 @endsection
